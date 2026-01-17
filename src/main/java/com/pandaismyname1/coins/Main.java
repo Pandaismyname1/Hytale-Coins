@@ -4,9 +4,11 @@ import com.pandaismyname1.coins.api.CoinsAPIProvider;
 import com.pandaismyname1.coins.command.EconomyCommand;
 import com.pandaismyname1.coins.command.PayCommand;
 import com.pandaismyname1.coins.command.WalletCommand;
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.CoinsAPIImpl;
 import com.pandaismyname1.coins.economy.WalletManager;
 import com.pandaismyname1.coins.interaction.DepositCoinInteraction;
+import com.pandaismyname1.coins.listener.MobDeathListener;
 import com.pandaismyname1.coins.ui.WalletPage;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -25,6 +27,9 @@ public class Main extends JavaPlugin {
     protected void setup() {
         super.setup();
 
+        // Load config
+        ConfigManager.load();
+
         // Register API
         CoinsAPIProvider.register(new CoinsAPIImpl());
 
@@ -38,6 +43,9 @@ public class Main extends JavaPlugin {
 
         // Register custom interaction
         ((AssetCodecMapCodec) Interaction.CODEC).register("DepositCoin", DepositCoinInteraction.class, DepositCoinInteraction.CODEC);
+
+        // Register mob death listener
+        this.getEntityStoreRegistry().registerSystem(new MobDeathListener());
     }
 
     @Override

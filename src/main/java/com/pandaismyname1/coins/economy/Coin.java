@@ -1,5 +1,7 @@
 package com.pandaismyname1.coins.economy;
 
+import com.pandaismyname1.coins.config.ConfigManager;
+
 public enum Coin {
     COPPER("Coin_Copper", 1),
     IRON("Coin_Iron", 10),
@@ -21,7 +23,7 @@ public enum Coin {
     }
 
     public long getValue() {
-        return value;
+        return ConfigManager.getConfig().getCoinValues().getOrDefault(itemId, value);
     }
 
     public static Coin fromItemId(String itemId) {

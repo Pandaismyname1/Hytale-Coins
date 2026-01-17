@@ -1,0 +1,112 @@
+package com.pandaismyname1.coins.listener;
+
+import com.hypixel.hytale.component.AddReason;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Holder;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.modules.entity.AllLegacyLivingEntityTypesQuery;
+import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
+import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathSystems;
+import com.hypixel.hytale.server.core.modules.entity.item.ItemComponent;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.pandaismyname1.coins.config.ConfigManager;
+import com.pandaismyname1.coins.economy.Coin;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MobDeathListener extends DeathSystems.OnDeathSystem {
+
+    @Nonnull
+    @Override
+    public Query getQuery() {
+        return AllLegacyLivingEntityTypesQuery.INSTANCE;
+    }
+
+    @Override
+    public void onComponentAdded(@Nonnull Ref ref, @Nonnull DeathComponent component, @Nonnull Store store, @Nonnull CommandBuffer commandBuffer) {
+        // Check if coin drops are enabled
+        if (!ConfigManager.getConfig().isEnableMobDeathDrops()) {
+            return;
+        }
+
+        // We only care about non-player mobs
+        if (store.getComponent(ref, Player.getComponentType()) != null) {
+            return;
+        }
+
+        Damage deathInfo = component.getDeathInfo();
+        if (deathInfo == null) return;
+
+        Damage.Source source = deathInfo.getSource();
+        if (!(source instanceof Damage.EntitySource)) return;
+
+        Ref<EntityStore> attackerRef = ((Damage.EntitySource) source).getRef();
+        if (!attackerRef.isValid()) return;
+
+        // Check if the killer is a player
+        if (store.getComponent(attackerRef, Player.getComponentType()) == null) {
+            return;
+        }
+
+        // Killer is a player, calculate coins based on mob health
+        EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
+        if (statMap == null) return;
+
+        float maxHealth = statMap.get(DefaultEntityStatTypes.getHealth()).getMax();
+        if (maxHealth <= 0) return;
+
+        // Drop coins based on max health and configured drop rate
+        float dropRate = ConfigManager.getConfig().getMobDeathDropRate();
+        long totalValue = (long) (maxHealth * dropRate);
+        if (totalValue <= 0) totalValue = 1; // Minimum 1 coin
+
+        List<ItemStack> coinsToDrop = calculateCoinStacks(totalValue);
+
+        // Get position to drop
+        TransformComponent transform = (TransformComponent) store.getComponent(ref, TransformComponent.getComponentType());
+        if (transform == null) return;
+
+        Vector3d position = transform.getPosition().clone().add(0, 1, 0);
+        
+        HeadRotation headRotationComponent = (HeadRotation) store.getComponent(ref, HeadRotation.getComponentType());
+        Vector3f rotation = (headRotationComponent != null) ? headRotationComponent.getRotation() : new Vector3f(0, 0, 0);
+
+        Holder<EntityStore>[] drops = ItemComponent.generateItemDrops(store, coinsToDrop, position, rotation);
+        commandBuffer.addEntities(drops, AddReason.SPAWN);
+    }
+
+    private List<ItemStack> calculateCoinStacks(long value) {
+        List<ItemStack> stacks = new ArrayList<>();
+        long remaining = value;
+
+        // Start from the most valuable coin
+        Coin[] coins = Coin.values();
+        for (int i = coins.length - 1; i >= 0; i--) {
+            Coin coin = coins[i];
+            long coinValue = coin.getValue();
+            if (remaining >= coinValue) {
+                int count = (int) (remaining / coinValue);
+                // Hytale item stacks might have a limit, but for coins let's assume standard stack sizes or just multiple stacks if needed
+                // For simplicity, let's just create one stack per coin type if it fits in int
+                stacks.add(new ItemStack(coin.getItemId(), count));
+                remaining %= coinValue;
+            }
+        }
+        return stacks;
+    }
+}
