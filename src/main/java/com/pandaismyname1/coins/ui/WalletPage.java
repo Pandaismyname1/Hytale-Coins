@@ -38,10 +38,10 @@ public class WalletPage extends InteractiveCustomUIPage<WalletPage.WalletEventDa
     @Override
     public void build(@Nonnull Ref ref, @Nonnull UICommandBuilder commandBuilder, @Nonnull UIEventBuilder eventBuilder, @Nonnull Store store) {
         Wallet wallet = WalletManager.getWallet(playerRef.getUuid());
-        Map<Coin, Long> breakdown = wallet.getBreakdown();
+        long balance = wallet.getBalance();
 
         commandBuilder.append("Pages/WalletPage.ui");
-        commandBuilder.set("#Balance.Text", "Total Balance: " + wallet.getBalance() + " Copper");
+        commandBuilder.set("#Balance.Text", "Total Balance: " + balance + " Copper");
 
         displayedCoins.clear();
         commandBuilder.clear("#CoinList");
@@ -51,13 +51,14 @@ public class WalletPage extends InteractiveCustomUIPage<WalletPage.WalletEventDa
         int index = 0;
         for (int i = coins.length - 1; i >= 0; i--) {
             Coin coin = coins[i];
-            long count = breakdown.getOrDefault(coin, 0L);
-            if (count > 0) {
+            long maxWithdrawable = balance / coin.getValue();
+            
+            if (maxWithdrawable > 0) {
                 String selector = "#CoinList[" + index + "]";
                 commandBuilder.append("#CoinList", "Pages/WalletCoinRow.ui");
                 
                 commandBuilder.set(selector + " #Name.Text", coin.name() + " Coin");
-                commandBuilder.set(selector + " #Description.Text", "Value: " + coin.getValue() + " Copper | Total: " + count);
+                commandBuilder.set(selector + " #Description.Text", "Value: " + coin.getValue() + " Copper | Max: " + maxWithdrawable);
                 
                 eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, selector + " #Button", 
                         new EventData().append("Index", String.valueOf(index)), false);
@@ -82,16 +83,15 @@ public class WalletPage extends InteractiveCustomUIPage<WalletPage.WalletEventDa
         if (slotIndex >= 0 && slotIndex < displayedCoins.size()) {
             Coin coin = displayedCoins.get(slotIndex);
             Wallet wallet = WalletManager.getWallet(playerRef.getUuid());
+            long balance = wallet.getBalance();
 
-            // Withdraw 1 coin by default, 100 if shift is held (or what's left)
-            long countInWallet = wallet.getBreakdown().getOrDefault(coin, 0L);
-            if (countInWallet > 0) {
-                int toWithdraw = data.isShiftHeld() ? (int) Math.min(countInWallet, 100) : 1;
+            // Withdraw 1 coin by default, 100 if shift is held (or max possible)
+            long maxWithdrawable = balance / coin.getValue();
+            if (maxWithdrawable > 0) {
+                int toWithdraw = data.isShiftHeld() ? (int) Math.min(maxWithdrawable, 100) : 1;
                 long totalValue = (long) toWithdraw * coin.getValue();
 
-                if (wallet.getBalance() >= totalValue) {
-                    wallet.remove(totalValue);
-
+                if (wallet.remove(totalValue)) {
                     Player playerComponent = (Player) store.getComponent(ref, Player.getComponentType());
                     if (playerComponent != null) {
                         ItemStack toAdd = new ItemStack(coin.getItemId(), toWithdraw);
