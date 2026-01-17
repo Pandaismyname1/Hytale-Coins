@@ -6,6 +6,8 @@ import java.util.Map;
 public class ModConfig {
     private boolean enableMobDeathDrops = true;
     private float mobDeathDropRate = 0.1f;
+    private boolean enableCropHarvestDrops = true;
+    private float cropHarvestDropRate = 0.2f;
     private Map<String, Long> coinValues = new HashMap<>();
 
     public ModConfig() {
@@ -32,6 +34,22 @@ public class ModConfig {
 
     public void setMobDeathDropRate(float mobDeathDropRate) {
         this.mobDeathDropRate = mobDeathDropRate;
+    }
+
+    public boolean isEnableCropHarvestDrops() {
+        return enableCropHarvestDrops;
+    }
+
+    public void setEnableCropHarvestDrops(boolean enableCropHarvestDrops) {
+        this.enableCropHarvestDrops = enableCropHarvestDrops;
+    }
+
+    public float getCropHarvestDropRate() {
+        return cropHarvestDropRate;
+    }
+
+    public void setCropHarvestDropRate(float cropHarvestDropRate) {
+        this.cropHarvestDropRate = cropHarvestDropRate;
     }
 
     public Map<String, Long> getCoinValues() {

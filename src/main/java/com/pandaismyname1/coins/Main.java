@@ -8,6 +8,7 @@ import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.CoinsAPIImpl;
 import com.pandaismyname1.coins.economy.WalletManager;
 import com.pandaismyname1.coins.interaction.DepositCoinInteraction;
+import com.pandaismyname1.coins.listener.CropHarvestListener;
 import com.pandaismyname1.coins.listener.MobDeathListener;
 import com.pandaismyname1.coins.ui.WalletPage;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
@@ -46,6 +47,9 @@ public class Main extends JavaPlugin {
 
         // Register mob death listener
         this.getEntityStoreRegistry().registerSystem(new MobDeathListener());
+
+        // Register crop harvest listener
+        this.getEntityStoreRegistry().registerSystem(new CropHarvestListener());
     }
 
     @Override
