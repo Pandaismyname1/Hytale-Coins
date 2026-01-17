@@ -1,0 +1,14 @@
+Coin_Copper.name = Copper Coin
+Coin_Copper.description = A shiny copper coin.
+Coin_Iron.name = Iron Coin
+Coin_Iron.description = A sturdy iron coin.
+Coin_Silver.name = Silver Coin
+Coin_Silver.description = A valuable silver coin.
+Coin_Gold.name = Gold Coin
+Coin_Gold.description = A very valuable gold coin.
+Coin_Emerald.name = Emerald Coin
+Coin_Emerald.description = An extremely valuable emerald coin.
+Coin_Diamond.name = Diamond Coin
+Coin_Diamond.description = The most valuable diamond coin.
+Wallet.name = Wallet
+Wallet.description = Use to check your coin balance.

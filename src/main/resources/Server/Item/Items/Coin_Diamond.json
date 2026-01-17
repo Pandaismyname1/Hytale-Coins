@@ -1,0 +1,21 @@
+{
+  "TranslationProperties": {
+    "Name": "items.Coin_Diamond.name",
+    "Description": "items.Coin_Diamond.description"
+  },
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/Coin_Diamond.png",
+  "Quality": "Common",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "DepositCoin"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+$C = "../Common.ui";
+
+Group {
+  Padding: (Bottom: 8);
+  Anchor: (Height: 72);
+
+  Button #Button {
+    LayoutMode: Left;
+    Anchor: (Full: 0);
+    Padding: (Full: 4);
+    Style: $C.@DefaultButtonStyle;
+
+    ItemIcon #Icon {
+      Anchor: (Width: 56, Height: 56);
+    }
+
+    Group {
+      FlexWeight: 1;
+      LayoutMode: Top;
+      Padding: (Left: 12);
+
+      Label #Name {
+        Style: (FontSize: 18, TextColor: #FFFFFF, RenderBold: true);
+      }
+
+      Label #Description {
+        Style: (FontSize: 14, TextColor: #AAAAAA);
+      }
+    }
+  }
+}

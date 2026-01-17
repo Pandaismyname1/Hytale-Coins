@@ -1,0 +1,31 @@
+{
+  "TranslationProperties": {
+    "Name": "items.Wallet.name",
+    "Description": "items.Wallet.description"
+  },
+  "MaxStack": 1,
+  "Icon": "Icons/ItemsGenerated/Wallet.png",
+  "Quality": "Common",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "OpenCustomUI",
+          "Page": {
+            "Id": "Coins_Wallet"
+          }
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "OpenCustomUI",
+          "Page": {
+            "Id": "Coins_Wallet"
+          }
+        }
+      ]
+    }
+  }
+}

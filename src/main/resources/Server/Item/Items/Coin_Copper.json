@@ -1,0 +1,21 @@
+{
+  "TranslationProperties": {
+    "Name": "items.Coin_Copper.name",
+    "Description": "items.Coin_Copper.description"
+  },
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/Coin_Copper.png",
+  "Quality": "Common",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "DepositCoin"
+        }
+      ]
+    }
+  }
+}

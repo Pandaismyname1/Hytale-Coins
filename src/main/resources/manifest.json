@@ -1,0 +1,22 @@
+{
+    "Group": "Pandaismyname1",
+    "Name": "Coins",
+    "Version": "1.0",
+    "Description": "A simple economy mod adding physical coins and a digital wallet to Hytale.",
+    "Authors": [
+        {
+            "Name": "Pandaismyname1"
+        }
+    ],
+    "Website": "https://github.com/Pandaismyname1/hytale-coins",
+    "ServerVersion": "*",
+    "Dependencies": {
+        
+    },
+    "OptionalDependencies": {
+        
+    },
+    "DisabledByDefault": false,
+    "Main": "com.pandaismyname1.coins.Main",
+    "IncludesAssetPack": true
+}

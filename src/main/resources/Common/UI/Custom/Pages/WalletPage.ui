@@ -1,0 +1,44 @@
+$C = "../Common.ui";
+
+$C.@PageOverlay {}
+$W = "WalletActions.ui";
+
+$C.@Container {
+  Anchor: (Width: 400, Height: 550);
+
+  #Title {
+    Group {
+      $C.@Title {
+        @Text = "Player Wallet";
+      }
+    }
+  }
+
+  #Content {
+    LayoutMode: Top;
+
+    Label #Balance {
+      Text: "Total Balance: 0 Copper";
+      Style: (Alignment: Center, TextColor: #F1C40F, FontSize: 18);
+      Padding: (Bottom: 10);
+    }
+
+    Group #CoinListContainer {
+      FlexWeight: 1;
+      LayoutMode: TopScrolling;
+      ScrollbarStyle: $C.@DefaultScrollbarStyle;
+
+      Label #EmptyMessage {
+        Visible: false;
+        Text: "Your wallet is empty.";
+        Style: (Alignment: Center, TextColor: #AAAAAA, FontSize: 16);
+      }
+
+      Group #CoinList {
+        LayoutMode: Top;
+      }
+    }
+  }
+}
+
+$W.@Actions {}

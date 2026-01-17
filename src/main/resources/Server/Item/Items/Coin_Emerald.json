@@ -1,0 +1,21 @@
+{
+  "TranslationProperties": {
+    "Name": "items.Coin_Emerald.name",
+    "Description": "items.Coin_Emerald.description"
+  },
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/Coin_Emerald.png",
+  "Quality": "Common",
+  "Categories": [
+    "Blocks.Rocks"
+  ],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "DepositCoin"
+        }
+      ]
+    }
+  }
+}

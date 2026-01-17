@@ -1,0 +1,38 @@
+$C = "../Common.ui";
+
+@ActionGuide = Group {
+  LayoutMode: Left;
+  Padding: (Horizontal: 10);
+  
+  Label {
+    Text: @Key;
+    Style: (FontSize: 14, TextColor: #F1C40F, RenderBold: true, VerticalAlignment: Center);
+    Padding: (Right: 4);
+  }
+  
+  Label {
+    Text: @Action;
+    Style: (FontSize: 14, TextColor: #FFFFFF, VerticalAlignment: Center);
+  }
+};
+
+@Actions = Group {
+  LayoutMode: Left;
+  Anchor: (Left: 50, Bottom: 50, Height: 27);
+
+  BackButton {}
+
+  Group { Anchor: (Width: 20); }
+
+  @ActionGuide {
+    @Key = "CLICK";
+    @Action = "Withdraw 1";
+  }
+
+  Group { Anchor: (Width: 20); }
+
+  @ActionGuide {
+    @Key = "SHIFT + CLICK";
+    @Action = "Withdraw 100";
+  }
+};
