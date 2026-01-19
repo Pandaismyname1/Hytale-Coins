@@ -14,7 +14,7 @@
         
     },
     "OptionalDependencies": {
-        
+        "TheNewEconomy:VaultUnlocked": ">=2.18.2"
     },
     "DisabledByDefault": false,
     "Main": "com.pandaismyname1.coins.Main",
