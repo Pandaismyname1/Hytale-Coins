@@ -67,13 +67,31 @@ public class MobDeathListener extends DeathSystems.OnDeathSystem {
         EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
         if (statMap == null) return;
 
-        float maxHealth = statMap.get(DefaultEntityStatTypes.getHealth()).getMax();
-        if (maxHealth <= 0) return;
+        long totalValue = 0;
 
-        // Drop coins based on max health and configured drop rate
-        float dropRate = ConfigManager.getConfig().getMobDeathDropRate();
-        long totalValue = (long) (maxHealth * dropRate);
-        if (totalValue <= 0) totalValue = 1; // Minimum 1 coin
+        // Try to get specific drop value from config
+        ModelComponent modelComponent = (ModelComponent) store.getComponent(ref, ModelComponent.getComponentType());
+        if (modelComponent != null && modelComponent.getModel() != null) {
+            String modelAssetId = modelComponent.getModel().getModelAssetId();
+            if (modelAssetId != null) {
+                // Hytale modelAssetIds often look like "hytale:fox", so we'll check both full and short name
+                totalValue = ConfigManager.getConfig().getMobDeathDrops().getOrDefault(modelAssetId, 0L);
+                if (totalValue == 0) {
+                    String shortName = modelAssetId.contains(":") ? modelAssetId.substring(modelAssetId.indexOf(":") + 1) : modelAssetId;
+                    totalValue = ConfigManager.getConfig().getMobDeathDrops().getOrDefault(shortName, 0L);
+                }
+            }
+        }
+
+        if (totalValue <= 0) {
+            float maxHealth = statMap.get(DefaultEntityStatTypes.getHealth()).getMax();
+            if (maxHealth <= 0) return;
+
+            // Drop coins based on max health and configured drop rate
+            float dropRate = ConfigManager.getConfig().getMobDeathDropRate();
+            totalValue = (long) (maxHealth * dropRate);
+            if (totalValue <= 0) totalValue = 1; // Minimum 1 coin
+        }
 
         List<ItemStack> coinsToDrop = calculateCoinStacks(totalValue);
 

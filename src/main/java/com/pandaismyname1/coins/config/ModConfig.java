@@ -9,6 +9,7 @@ public class ModConfig {
     private boolean enableCropHarvestDrops = true;
     private float cropHarvestDropRate = 0.2f;
     private Map<String, Long> coinValues = new HashMap<>();
+    private Map<String, Long> mobDeathDrops = new HashMap<>();
 
     public ModConfig() {
         // Default values
@@ -18,6 +19,10 @@ public class ModConfig {
         coinValues.put("Coin_Gold", 1000L);
         coinValues.put("Coin_Emerald", 10000L);
         coinValues.put("Coin_Diamond", 100000L);
+
+        // Example custom mob drops
+        mobDeathDrops.put("Fox", 3L);
+        mobDeathDrops.put("Cow", 3L);
     }
 
     public boolean isEnableMobDeathDrops() {
@@ -58,5 +63,13 @@ public class ModConfig {
 
     public void setCoinValues(Map<String, Long> coinValues) {
         this.coinValues = coinValues;
+    }
+
+    public Map<String, Long> getMobDeathDrops() {
+        return mobDeathDrops;
+    }
+
+    public void setMobDeathDrops(Map<String, Long> mobDeathDrops) {
+        this.mobDeathDrops = mobDeathDrops;
     }
 }
