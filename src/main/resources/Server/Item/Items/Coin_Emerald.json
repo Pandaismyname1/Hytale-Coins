@@ -17,5 +17,8 @@
         }
       ]
     }
-  }
+  },
+  "Texture": "Items/Coin_Emerald.png",
+  "Model": "Items/Coin.blockymodel",
+  "Scale": 2
 }

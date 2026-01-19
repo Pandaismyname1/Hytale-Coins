@@ -3,6 +3,7 @@ package com.pandaismyname1.coins.command;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
 
+import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -21,6 +22,7 @@ public class PayCommand extends AbstractCommand {
 
     public PayCommand() {
         super("pay", "Pay coins to another player");
+        this.setPermissionGroup(GameMode.Adventure);
         this.playerArg = this.withRequiredArg("player", "The player to pay", ArgTypes.PLAYER_REF);
         this.amountArg = this.withRequiredArg("amount", "The amount of copper to pay", ArgTypes.INTEGER);
     }

@@ -2,6 +2,7 @@ package com.pandaismyname1.coins.command;
 
 import com.pandaismyname1.coins.ui.WalletPage;
 
+import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class WalletCommand extends AbstractCommand {
     public WalletCommand() {
         super("wallet", "Check your coin balance");
+        this.setPermissionGroup(GameMode.Adventure);
     }
 
     @Override
