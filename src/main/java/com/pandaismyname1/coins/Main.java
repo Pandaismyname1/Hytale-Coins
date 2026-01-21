@@ -52,7 +52,12 @@ public class Main extends JavaPlugin {
         // Register crop harvest listener
         this.getEntityStoreRegistry().registerSystem(new CropHarvestListener());
 
-        VaultUnlockedPlugin.setup(this.getLogger());
+        try {
+            Class.forName("net.milkbowl.vault2.economy.Economy");
+            VaultUnlockedPlugin.setup(this.getLogger());
+        } catch (ClassNotFoundException e) {
+            this.getLogger().atInfo().log("Vault2 not found. Skipping Vault integration.");
+        }
     }
 
     @Override
