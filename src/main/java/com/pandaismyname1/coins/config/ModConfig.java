@@ -13,6 +13,12 @@ public class ModConfig {
     private String payCommandPermission = "";
     private String currencyNameSingular = "Coin";
     private String currencyNamePlural = "Coins";
+    private String storageType = "JSON"; // JSON or MYSQL
+    private String mysqlHost = "localhost";
+    private int mysqlPort = 3306;
+    private String mysqlDatabase = "hytale";
+    private String mysqlUser = "root";
+    private String mysqlPassword = "";
 
     public ModConfig() {
         // Default values
@@ -98,5 +104,53 @@ public class ModConfig {
 
     public void setCurrencyNamePlural(String currencyNamePlural) {
         this.currencyNamePlural = currencyNamePlural;
+    }
+
+    public String getStorageType() {
+        return storageType;
+    }
+
+    public void setStorageType(String storageType) {
+        this.storageType = storageType;
+    }
+
+    public String getMysqlHost() {
+        return mysqlHost;
+    }
+
+    public void setMysqlHost(String mysqlHost) {
+        this.mysqlHost = mysqlHost;
+    }
+
+    public int getMysqlPort() {
+        return mysqlPort;
+    }
+
+    public void setMysqlPort(int mysqlPort) {
+        this.mysqlPort = mysqlPort;
+    }
+
+    public String getMysqlDatabase() {
+        return mysqlDatabase;
+    }
+
+    public void setMysqlDatabase(String mysqlDatabase) {
+        this.mysqlDatabase = mysqlDatabase;
+    }
+
+    public String getMysqlUser() {
+        return mysqlUser;
+    }
+
+    public void setMysqlUser(String mysqlUser) {
+        this.mysqlUser = mysqlUser;
+    }
+
+    public String getMysqlPassword() {
+        return mysqlPassword;
+    }
+
+    public void setMysqlPassword(String mysqlPassword) {
+        this.mysqlPassword = mysqlPassword;
     }
 }

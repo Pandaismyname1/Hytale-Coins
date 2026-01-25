@@ -14,6 +14,10 @@ public class Wallet {
         this.balance = balance;
     }
 
+    public UUID getOwner() {
+        return owner;
+    }
+
     public long getBalance() {
         return balance;
     }

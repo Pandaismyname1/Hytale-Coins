@@ -32,6 +32,9 @@ public class Main extends JavaPlugin {
         // Load config
         ConfigManager.load();
 
+        // Initialize WalletManager
+        WalletManager.init();
+
         // Register API
         CoinsAPIProvider.register(new CoinsAPIImpl());
 
@@ -62,7 +65,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void shutdown() {
-        WalletManager.saveAll();
+        WalletManager.shutdown();
         CoinsAPIProvider.unregister();
         super.shutdown();
     }
