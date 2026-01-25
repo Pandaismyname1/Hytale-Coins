@@ -1,5 +1,6 @@
 package com.pandaismyname1.coins.command;
 
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
 
@@ -22,7 +23,14 @@ public class PayCommand extends AbstractCommand {
 
     public PayCommand() {
         super("pay", "Pay coins to another player");
-        this.setPermissionGroup(GameMode.Adventure);
+        
+        String permission = ConfigManager.getConfig().getPayCommandPermission();
+        if (permission == null || permission.isEmpty()) {
+            this.setPermissionGroup(GameMode.Adventure);
+        } else {
+            this.requirePermission(permission);
+        }
+
         this.playerArg = this.withRequiredArg("player", "The player to pay", ArgTypes.PLAYER_REF);
         this.amountArg = this.withRequiredArg("amount", "The amount of copper to pay", ArgTypes.INTEGER);
     }

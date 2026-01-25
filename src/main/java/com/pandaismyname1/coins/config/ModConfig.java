@@ -10,6 +10,7 @@ public class ModConfig {
     private float cropHarvestDropRate = 0.2f;
     private Map<String, Long> coinValues = new HashMap<>();
     private Map<String, Long> mobDeathDrops = new HashMap<>();
+    private String payCommandPermission = "";
 
     public ModConfig() {
         // Default values
@@ -71,5 +72,13 @@ public class ModConfig {
 
     public void setMobDeathDrops(Map<String, Long> mobDeathDrops) {
         this.mobDeathDrops = mobDeathDrops;
+    }
+
+    public String getPayCommandPermission() {
+        return payCommandPermission;
+    }
+
+    public void setPayCommandPermission(String payCommandPermission) {
+        this.payCommandPermission = payCommandPermission;
     }
 }
