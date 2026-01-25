@@ -54,7 +54,13 @@ public class EconomyCommand extends AbstractCommand {
             wallet.remove(current);
             wallet.add(amount);
 
-            commandContext.sendMessage(Message.raw("§6[Economy] §fSet §b" + targetRef.getUsername() + "§f's balance to §e" + amount + " Copper§f."));
+            commandContext.sendMessage(Message.empty()
+                    .insert(Message.empty().insert("[Economy] ").color("GOLD"))
+                    .insert(Message.empty().insert("Set ").color("WHITE"))
+                    .insert(Message.empty().insert(targetRef.getUsername()).color("AQUA"))
+                    .insert(Message.empty().insert("'s balance to ").color("WHITE"))
+                    .insert(Message.empty().insert(amount + " Copper").color("YELLOW"))
+                    .insert(Message.empty().insert(".").color("WHITE")));
             return CompletableFuture.completedFuture(null);
         }
     }
@@ -79,7 +85,13 @@ public class EconomyCommand extends AbstractCommand {
             Wallet wallet = WalletManager.getWallet(targetRef.getUuid());
             wallet.add(amount);
 
-            commandContext.sendMessage(Message.raw("§6[Economy] §fAdded §e" + amount + " Copper §fto §b" + targetRef.getUsername() + "§f's balance."));
+            commandContext.sendMessage(Message.empty()
+                    .insert(Message.empty().insert("[Economy] ").color("GOLD"))
+                    .insert(Message.empty().insert("Added ").color("WHITE"))
+                    .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                    .insert(Message.empty().insert("to ").color("WHITE"))
+                    .insert(Message.empty().insert(targetRef.getUsername()).color("AQUA"))
+                    .insert(Message.empty().insert("'s balance.").color("WHITE")));
             return CompletableFuture.completedFuture(null);
         }
     }

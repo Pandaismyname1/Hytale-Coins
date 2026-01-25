@@ -21,7 +21,7 @@ public class WalletCommand extends AbstractCommand {
     @Override
     protected CompletableFuture<Void> execute(@NonNullDecl CommandContext commandContext) {
         if (!commandContext.isPlayer()) {
-            commandContext.sendMessage(Message.raw("This command can only be used by players."));
+            commandContext.sendMessage(Message.empty().insert("This command can only be used by players.").color("RED"));
             return CompletableFuture.completedFuture(null);
         }
 

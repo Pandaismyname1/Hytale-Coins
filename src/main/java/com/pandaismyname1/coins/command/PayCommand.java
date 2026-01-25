@@ -30,7 +30,7 @@ public class PayCommand extends AbstractCommand {
     @Override
     protected CompletableFuture<Void> execute(@NonNullDecl CommandContext commandContext) {
         if (!commandContext.isPlayer()) {
-            commandContext.sendMessage(Message.raw("This command can only be used by players."));
+            commandContext.sendMessage(Message.empty().insert("This command can only be used by players.").color("RED"));
             return CompletableFuture.completedFuture(null);
         }
 
@@ -43,12 +43,12 @@ public class PayCommand extends AbstractCommand {
         }
 
         if (amount <= 0) {
-            commandContext.sendMessage(Message.raw("§cAmount must be greater than zero."));
+            commandContext.sendMessage(Message.empty().insert("Amount must be greater than zero.").color("RED"));
             return CompletableFuture.completedFuture(null);
         }
 
         if (sender.getUuid().equals(recipientRef.getUuid())) {
-            commandContext.sendMessage(Message.raw("§cYou cannot pay yourself."));
+            commandContext.sendMessage(Message.empty().insert("You cannot pay yourself.").color("RED"));
             return CompletableFuture.completedFuture(null);
         }
 
@@ -57,15 +57,27 @@ public class PayCommand extends AbstractCommand {
             Wallet recipientWallet = WalletManager.getWallet(recipientRef.getUuid());
             recipientWallet.add(amount);
 
-            sender.sendMessage(Message.raw("§6[Wallet] §fYou paid §e" + amount + " Copper §fto §b" + recipientRef.getUsername() + "§f."));
+            sender.sendMessage(Message.empty()
+                    .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
+                    .insert(Message.empty().insert("You paid ").color("WHITE"))
+                    .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                    .insert(Message.empty().insert("to ").color("WHITE"))
+                    .insert(Message.empty().insert(recipientRef.getUsername()).color("AQUA"))
+                    .insert(Message.empty().insert(".").color("WHITE")));
             
             // Try to notify recipient if they are online
             Player recipientPlayer = recipientRef.getComponent(Player.getComponentType());
             if (recipientPlayer != null) {
-                recipientPlayer.sendMessage(Message.raw("§6[Wallet] §fYou received §e" + amount + " Copper §ffrom §b" + sender.getDisplayName() + "§f."));
+                recipientPlayer.sendMessage(Message.empty()
+                        .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
+                        .insert(Message.empty().insert("You received ").color("WHITE"))
+                        .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                        .insert(Message.empty().insert("from ").color("WHITE"))
+                        .insert(Message.empty().insert(sender.getDisplayName()).color("AQUA"))
+                        .insert(Message.empty().insert(".").color("WHITE")));
             }
         } else {
-            commandContext.sendMessage(Message.raw("§cYou do not have enough coins."));
+            commandContext.sendMessage(Message.empty().insert("You do not have enough coins.").color("RED"));
         }
 
         return CompletableFuture.completedFuture(null);

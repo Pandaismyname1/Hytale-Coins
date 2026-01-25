@@ -50,7 +50,13 @@ public class DepositCoinInteraction extends SimpleInstantInteraction {
             // Inform the user
             Player player = (Player) context.getCommandBuffer().getComponent(ref, Player.getComponentType());
             if (player != null) {
-                player.sendMessage(Message.raw("Deposited " + value + " coins. New balance: " + wallet.getBalance()));
+                player.sendMessage(Message.empty()
+                        .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
+                        .insert(Message.empty().insert("Deposited ").color("WHITE"))
+                        .insert(Message.empty().insert(value + " Copper").color("YELLOW"))
+                        .insert(Message.empty().insert(". New balance: ").color("WHITE"))
+                        .insert(Message.empty().insert(wallet.getBalance() + " Copper").color("YELLOW"))
+                        .insert(Message.empty().insert(".").color("WHITE")));
             }
 
             // Remove items from inventory
