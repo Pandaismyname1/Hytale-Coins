@@ -1,5 +1,7 @@
 package com.pandaismyname1.coins.command;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
 
@@ -59,7 +61,7 @@ public class EconomyCommand extends AbstractCommand {
                     .insert(Message.empty().insert("Set ").color("WHITE"))
                     .insert(Message.empty().insert(targetRef.getUsername()).color("AQUA"))
                     .insert(Message.empty().insert("'s balance to ").color("WHITE"))
-                    .insert(Message.empty().insert(amount + " Copper").color("YELLOW"))
+                    .insert(Message.empty().insert(CoinsAPIProvider.format(amount)).color("YELLOW"))
                     .insert(Message.empty().insert(".").color("WHITE")));
             return CompletableFuture.completedFuture(null);
         }
@@ -70,7 +72,7 @@ public class EconomyCommand extends AbstractCommand {
         private final RequiredArg amountArg;
 
         public EconomyAddCommand() {
-            super("add", "Add coins to a player's balance");
+            super("add", "Add " + CoinsAPIProvider.getCurrencyName(2).toLowerCase() + " to a player's balance");
             this.playerArg = this.withRequiredArg("player", "The player", ArgTypes.PLAYER_REF);
             this.amountArg = this.withRequiredArg("amount", "The amount", ArgTypes.INTEGER);
         }
@@ -88,7 +90,7 @@ public class EconomyCommand extends AbstractCommand {
             commandContext.sendMessage(Message.empty()
                     .insert(Message.empty().insert("[Economy] ").color("GOLD"))
                     .insert(Message.empty().insert("Added ").color("WHITE"))
-                    .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                    .insert(Message.empty().insert(CoinsAPIProvider.format(amount) + " ").color("YELLOW"))
                     .insert(Message.empty().insert("to ").color("WHITE"))
                     .insert(Message.empty().insert(targetRef.getUsername()).color("AQUA"))
                     .insert(Message.empty().insert("'s balance.").color("WHITE")));

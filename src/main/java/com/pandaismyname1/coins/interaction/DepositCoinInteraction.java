@@ -1,5 +1,7 @@
 package com.pandaismyname1.coins.interaction;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Coin;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
@@ -53,9 +55,9 @@ public class DepositCoinInteraction extends SimpleInstantInteraction {
                 player.sendMessage(Message.empty()
                         .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
                         .insert(Message.empty().insert("Deposited ").color("WHITE"))
-                        .insert(Message.empty().insert(value + " Copper").color("YELLOW"))
+                        .insert(Message.empty().insert(CoinsAPIProvider.format(value)).color("YELLOW"))
                         .insert(Message.empty().insert(". New balance: ").color("WHITE"))
-                        .insert(Message.empty().insert(wallet.getBalance() + " Copper").color("YELLOW"))
+                        .insert(Message.empty().insert(CoinsAPIProvider.format(wallet.getBalance())).color("YELLOW"))
                         .insert(Message.empty().insert(".").color("WHITE")));
             }
 

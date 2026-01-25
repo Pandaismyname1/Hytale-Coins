@@ -1,5 +1,7 @@
 package com.pandaismyname1.coins.ui;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Coin;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
@@ -41,7 +43,7 @@ public class WalletPage extends InteractiveCustomUIPage<WalletPage.WalletEventDa
         long balance = wallet.getBalance();
 
         commandBuilder.append("Pages/WalletPage.ui");
-        commandBuilder.set("#Balance.Text", "Total Balance: " + balance + " Copper");
+        commandBuilder.set("#Balance.Text", "Total Balance: " + CoinsAPIProvider.format(balance));
 
         displayedCoins.clear();
         commandBuilder.clear("#CoinList");
@@ -57,8 +59,8 @@ public class WalletPage extends InteractiveCustomUIPage<WalletPage.WalletEventDa
                 String selector = "#CoinList[" + index + "]";
                 commandBuilder.append("#CoinList", "Pages/WalletCoinRow.ui");
                 
-                commandBuilder.set(selector + " #Name.Text", coin.name() + " Coin");
-                commandBuilder.set(selector + " #Description.Text", "Value: " + coin.getValue() + " Copper | Max: " + maxWithdrawable);
+                commandBuilder.set(selector + " #Name.Text", coin.name().charAt(0) + coin.name().substring(1).toLowerCase() + " " + CoinsAPIProvider.getCurrencyName(1));
+                commandBuilder.set(selector + " #Description.Text", "Value: " + CoinsAPIProvider.format(coin.getValue()) + " | Max: " + maxWithdrawable);
                 
                 eventBuilder.addEventBinding(CustomUIEventBindingType.Activating, selector + " #Button", 
                         new EventData().append("Index", String.valueOf(index)), false);

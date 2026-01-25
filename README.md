@@ -4,17 +4,18 @@ A simple economy mod for Hytale that adds physical coins and a digital wallet sy
 
 ## Features
 
-- **Physical Coins**: Six tiers of coins are available, each with its own value in Copper:
-    - **Copper**: 1 Copper
-    - **Iron**: 10 Copper
-    - **Silver**: 100 Copper
-    - **Gold**: 1,000 Copper
-    - **Emerald**: 10,000 Copper
-    - **Diamond**: 100,000 Copper
+- **Physical Coins**: Six tiers of coins are available, each with its own value in the base currency (default: "Copper"):
+    - **Copper**: 1 unit
+    - **Iron**: 10 units
+    - **Silver**: 100 units
+    - **Gold**: 1,000 units
+    - **Emerald**: 10,000 units
+    - **Diamond**: 100,000 units
 - **Wallet System**: Deposit coins into your digital wallet and withdraw them at any time.
+- **Configurable Currency**: The name of the base currency can be configured in `config.json` (singular and plural names).
 - **Commands**:
     - `/wallet`: Open the wallet UI to see your balance and manage coins.
-    - `/pay <player> <amount>`: Send copper coins to another player.
+    - `/pay <player> <amount>`: Send currency to another player.
     - `/economy <add/set> <player> <amount>`: Admin commands to manage player balances (Alias: `/eco`). Requires `coins.admin.economy` permission.
 - **Interactions**: Right click with a coin in hand to quickly deposit it into your wallet.
 - **API**: A built-in Java API for other mods to interact with the economy.
@@ -78,11 +79,13 @@ if (api != null) {
 
 ### Available Methods
 
-- `getBalance(UUID playerUuid)`: Gets the player's balance in Copper.
-- `addCoins(UUID playerUuid, long amount)`: Adds Copper to the player's wallet.
-- `removeCoins(UUID playerUuid, long amount)`: Removes Copper from the player's wallet (returns `false` if insufficient funds).
+- `getBalance(UUID playerUuid)`: Gets the player's balance in the base currency.
+- `addCoins(UUID playerUuid, long amount)`: Adds the base currency to the player's wallet.
+- `removeCoins(UUID playerUuid, long amount)`: Removes the base currency from the player's wallet (returns `false` if insufficient funds).
 - `setBalance(UUID playerUuid, long amount)`: Sets the player's balance.
-- `transferCoins(UUID senderUuid, UUID recipientUuid, long amount)`: Transfers Copper between players.
+- `transferCoins(UUID senderUuid, UUID recipientUuid, long amount)`: Transfers the base currency between players.
+- `getCurrencyNameSingular()`: Gets the singular name of the currency.
+- `getCurrencyNamePlural()`: Gets the plural name of the currency.
 
 ## License
 

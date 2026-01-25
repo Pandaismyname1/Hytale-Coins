@@ -18,7 +18,7 @@ $C.@Container {
     LayoutMode: Top;
 
     Label #Balance {
-      Text: "Total Balance: 0 Copper";
+      Text: "Total Balance: 0";
       Style: (Alignment: Center, TextColor: #F1C40F, FontSize: 18);
       Padding: (Bottom: 10);
     }

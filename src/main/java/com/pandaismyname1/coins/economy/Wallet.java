@@ -1,5 +1,6 @@
 package com.pandaismyname1.coins.economy;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -64,7 +65,7 @@ public class Wallet {
                 first = false;
             }
         }
-        if (sb.length() == 0) return "0 Copper";
+        if (sb.length() == 0) return CoinsAPIProvider.format(0);
         return sb.toString();
     }
 }

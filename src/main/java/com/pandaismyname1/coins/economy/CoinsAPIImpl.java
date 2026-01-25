@@ -1,6 +1,7 @@
 package com.pandaismyname1.coins.economy;
 
 import com.pandaismyname1.coins.api.CoinsAPI;
+import com.pandaismyname1.coins.config.ConfigManager;
 import java.util.UUID;
 
 public class CoinsAPIImpl implements CoinsAPI {
@@ -38,5 +39,15 @@ public class CoinsAPIImpl implements CoinsAPI {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String getCurrencyNameSingular() {
+        return ConfigManager.getConfig().getCurrencyNameSingular();
+    }
+
+    @Override
+    public String getCurrencyNamePlural() {
+        return ConfigManager.getConfig().getCurrencyNamePlural();
     }
 }

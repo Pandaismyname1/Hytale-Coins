@@ -11,6 +11,8 @@ public class ModConfig {
     private Map<String, Long> coinValues = new HashMap<>();
     private Map<String, Long> mobDeathDrops = new HashMap<>();
     private String payCommandPermission = "";
+    private String currencyNameSingular = "Coin";
+    private String currencyNamePlural = "Coins";
 
     public ModConfig() {
         // Default values
@@ -80,5 +82,21 @@ public class ModConfig {
 
     public void setPayCommandPermission(String payCommandPermission) {
         this.payCommandPermission = payCommandPermission;
+    }
+
+    public String getCurrencyNameSingular() {
+        return currencyNameSingular;
+    }
+
+    public void setCurrencyNameSingular(String currencyNameSingular) {
+        this.currencyNameSingular = currencyNameSingular;
+    }
+
+    public String getCurrencyNamePlural() {
+        return currencyNamePlural;
+    }
+
+    public void setCurrencyNamePlural(String currencyNamePlural) {
+        this.currencyNamePlural = currencyNamePlural;
     }
 }

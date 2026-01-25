@@ -1,5 +1,6 @@
 package com.pandaismyname1.coins.command;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
 import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
@@ -22,7 +23,7 @@ public class PayCommand extends AbstractCommand {
     private final RequiredArg amountArg;
 
     public PayCommand() {
-        super("pay", "Pay coins to another player");
+        super("pay", "Pay " + CoinsAPIProvider.getCurrencyName(2).toLowerCase() + " to another player");
         
         String permission = ConfigManager.getConfig().getPayCommandPermission();
         if (permission == null || permission.isEmpty()) {
@@ -32,7 +33,7 @@ public class PayCommand extends AbstractCommand {
         }
 
         this.playerArg = this.withRequiredArg("player", "The player to pay", ArgTypes.PLAYER_REF);
-        this.amountArg = this.withRequiredArg("amount", "The amount of copper to pay", ArgTypes.INTEGER);
+        this.amountArg = this.withRequiredArg("amount", "The amount of " + CoinsAPIProvider.getCurrencyName(1).toLowerCase() + " to pay", ArgTypes.INTEGER);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class PayCommand extends AbstractCommand {
             sender.sendMessage(Message.empty()
                     .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
                     .insert(Message.empty().insert("You paid ").color("WHITE"))
-                    .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                    .insert(Message.empty().insert(CoinsAPIProvider.format(amount) + " ").color("YELLOW"))
                     .insert(Message.empty().insert("to ").color("WHITE"))
                     .insert(Message.empty().insert(recipientRef.getUsername()).color("AQUA"))
                     .insert(Message.empty().insert(".").color("WHITE")));
@@ -79,13 +80,13 @@ public class PayCommand extends AbstractCommand {
                 recipientPlayer.sendMessage(Message.empty()
                         .insert(Message.empty().insert("[Wallet] ").color("GOLD"))
                         .insert(Message.empty().insert("You received ").color("WHITE"))
-                        .insert(Message.empty().insert(amount + " Copper ").color("YELLOW"))
+                        .insert(Message.empty().insert(CoinsAPIProvider.format(amount) + " ").color("YELLOW"))
                         .insert(Message.empty().insert("from ").color("WHITE"))
                         .insert(Message.empty().insert(sender.getDisplayName()).color("AQUA"))
                         .insert(Message.empty().insert(".").color("WHITE")));
             }
         } else {
-            commandContext.sendMessage(Message.empty().insert("You do not have enough coins.").color("RED"));
+            commandContext.sendMessage(Message.empty().insert("You do not have enough " + CoinsAPIProvider.getCurrencyName(2).toLowerCase() + ".").color("RED"));
         }
 
         return CompletableFuture.completedFuture(null);

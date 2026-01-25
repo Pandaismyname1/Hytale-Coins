@@ -1,5 +1,7 @@
 package com.pandaismyname1.coins.plugins;
 
+import com.pandaismyname1.coins.api.CoinsAPIProvider;
+import com.pandaismyname1.coins.config.ConfigManager;
 import com.pandaismyname1.coins.economy.Wallet;
 import com.pandaismyname1.coins.economy.WalletManager;
 import net.milkbowl.vault2.economy.AccountPermission;
@@ -38,7 +40,7 @@ public class VaultUnlockedEconomy implements Economy {
     
     @Override
     public String format( BigDecimal amount) {
-        return amount.toPlainString() + " Copper";
+        return CoinsAPIProvider.format(amount.longValue());
     }
 
     
@@ -50,7 +52,7 @@ public class VaultUnlockedEconomy implements Economy {
     
     @Override
     public String format( BigDecimal amount,  String currency) {
-        if ("Copper".equalsIgnoreCase(currency)) {
+        if (CoinsAPIProvider.getCurrencyName(1).equalsIgnoreCase(currency) || CoinsAPIProvider.getCurrencyName(2).equalsIgnoreCase(currency)) {
             return format(amount);
         }
         return amount.toPlainString() + " " + currency;
@@ -64,30 +66,30 @@ public class VaultUnlockedEconomy implements Economy {
 
     @Override
     public boolean hasCurrency( String currency) {
-        return "Copper".equalsIgnoreCase(currency);
+        return CoinsAPIProvider.getCurrencyName(1).equalsIgnoreCase(currency) || CoinsAPIProvider.getCurrencyName(2).equalsIgnoreCase(currency);
     }
 
     
     @Override
     public String getDefaultCurrency( String pluginName) {
-        return "Copper";
+        return CoinsAPIProvider.getCurrencyName(1);
     }
 
     
     @Override
     public String defaultCurrencyNamePlural( String pluginName) {
-        return "Copper";
+        return CoinsAPIProvider.getCurrencyName(2);
     }
 
     
     @Override
     public String defaultCurrencyNameSingular( String pluginName) {
-        return "Copper";
+        return CoinsAPIProvider.getCurrencyName(1);
     }
 
     @Override
     public  Collection<String> currencies() {
-        return List.of("Copper");
+        return List.of(CoinsAPIProvider.getCurrencyName(1));
     }
 
     @Override
